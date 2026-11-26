@@ -24,11 +24,11 @@ I started from the course's five headings: Project status, Commands, Conventions
 
 - **Allow `npm test`:** it's safe, read-only and run constantly, so asking for permission every time is just friction.
 - **Deny `rm -rf *`:** a recursive delete can wipe out work that isn't committed yet, and it can't be undone.
-- **Deny reading `.env`:** that file holds local secrets, and anything Claude reads ends up in the conversation. This rule only covers Claude's Read tool, so a shell command like `cat .env` isn't blocked by it. It's a guard against accidents, not a lock.
+- **Deny reading `.env`:** that file holds local secrets, and anything Claude reads ends up in the conversation. It only covers the Read tool (not `cat .env`), so it guards against accidents rather than locking the file.
 - **Ask before `git push`:** a push puts work on GitHub where others can see it, so I want to approve each one. Commits stay local and easy to undo, so they don't need this.
-- **Deny `git push --force`:** a force push overwrites history on GitHub and can wipe out other people's commits. Deny beats ask, so this is blocked outright even though ordinary pushes only need my approval. The rule matches the command's start, so `git push -f` or `git push origin main --force` aren't caught by it. Those still fall under the ask rule, though, so I'd see them before they ran.
+- **Deny `git push --force`:** a force push overwrites history on GitHub and can wipe out other people's commits. Deny beats ask, so it's blocked outright. Variants like `git push -f` slip past this rule but still hit the ask rule.
 
-**What could go wrong without the deny rule:** Claude could delete a folder recursively. The command might be well meant but aimed at the wrong place, or a cleanup step inside a longer command. This actually happened: while installing the GitHub CLI, Claude chained `rm -rf extracted` into a long install command, and the deny rule blocked the whole command before any of it ran. Claude then redid the install as small, separate steps with no delete.
+**What could go wrong without the `rm -rf` deny rule:** a well-meant recursive delete, aimed at the wrong place or buried in a longer command, could wipe out uncommitted work. This happened once: Claude chained `rm -rf` into a GitHub CLI install command, and the rule blocked the whole command before any of it ran.
 
 ## Verification
 
