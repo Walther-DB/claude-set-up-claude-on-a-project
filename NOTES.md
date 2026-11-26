@@ -5,14 +5,15 @@
 I started from the course's five headings: Project status, Commands, Conventions, Architecture, and Maintenance & health checks. I later removed the Maintenance & health checks section, along with a macOS-specific shell note, so four headings remain. Each section only holds what Claude can't work out quickly from the code, or would otherwise ask me about.
 
 **Kept in:**
-- **A one-line description** of the project, plus the rule not to change the app code unless asked, because the course work is the Claude setup around it.
+- **A one-line description** of the project.
 - **Commands ready to copy and paste**, including the less obvious ones: running a single test file, and a `curl` health check against a running server.
 - **Conventions a linter can't enforce:** CommonJS instead of ES modules, data access only through `db/store.js`, the JSON error format with status codes, `node:test` and `supertest` instead of Jest, and working on a branch with a pull request rather than committing to `main`.
-- **A short architecture map:** the `server.js` entry point, one router per resource in `routes/`, the in-memory store, the tests, CI and the permission settings.
+- **A short architecture overview:** the `server.js` entry point, one router per resource in `routes/`, and data access through `db/store.js`.
 
 **Left out:**
 - **Generic Claude Code commands** like `/exit` and `/clear`. They're the same in every project and don't help Claude work on this one.
-- **Anything obvious from the code**, such as the list of endpoints or the seed users, which would only go out of date.
+- **Anything obvious from the code**, such as the list of endpoints, the seed users, or what the tests, CI and permission files contain, which would only go out of date.
+- **Course-specific instructions**, like the rule not to change the app code, which would go stale once the project moves on.
 - **One-off tasks**, like the npm security fix I did once, and **anything sensitive**: no secrets or tokens.
 
 **One fix along the way:** I renamed `Claude.md` to `CLAUDE.md`. macOS doesn't care about capital letters in file names, but Linux does, and that includes CI and a reviewer's machine.

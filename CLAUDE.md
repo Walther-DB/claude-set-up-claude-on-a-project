@@ -4,9 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project status
 
-A small Express REST API for managing users (list, fetch, create), used as the starter project for the Claude Code course. Later course levels build on this same repo.
-
-- Do not change the app code (`server.js`, `routes/`, `db/`, `tests/`) unless explicitly asked — the course work is the Claude setup around it.
+A small Express REST API for managing users (list, fetch, create).
 
 ## Commands
 
@@ -36,9 +34,6 @@ Git
 
 ## Architecture
 
-- `server.js` creates the Express app, adds JSON body parsing and mounts one router per resource (`/users`, `/health`). It only calls `listen()` when run directly (`require.main === module`) and exports `app`, so tests can use it without opening a port.
-- `routes/` holds one file per resource, each exporting an `express.Router()`. A new resource gets its own file here, mounted in `server.js`.
-- `db/store.js` is an in-memory stand-in for a database, seeded with two users. Data resets on every restart.
-- `tests/users.test.js` covers the HTTP endpoints through `supertest`.
-- `.github/workflows/ci.yml` runs `npm install`, `npm run lint` and `npm test` on Node 22 for every push and pull request.
-- `.claude/settings.json` holds the shared permission rules (allows `npm test`; asks before `git push`; denies `rm -rf *`, `git push --force` and reading `.env`).
+- `server.js` is the entry point: it creates the Express app and mounts one router per resource. It exports `app` and only calls `listen()` when run directly, so tests can use it without opening a port.
+- `routes/` holds one file per resource, each exporting an `express.Router()`.
+- `db/store.js` is an in-memory data store; all data access goes through its functions. Data resets on every restart.
