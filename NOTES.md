@@ -30,5 +30,5 @@ I started from the course's five headings: Project status, Commands, Conventions
 
 - [x] `claude --version` runs; Claude Code is installed and signed in.
 - [x] `npm test` (4/4) and `npm run lint` pass on `main`.
-- [ ] `/memory` shows `CLAUDE.md` loaded (check in a fresh session).
-- [ ] `/permissions` shows the allow and deny rules (check in a fresh session).
+- [x] `/memory` shows `CLAUDE.md` loaded as the project memory, so its instructions reach every new session. Claude's auto-memory folder for this project is still empty, which is expected: nothing has been worth saving between sessions yet.
+- [x] `/permissions` shows the shared rules from `.claude/settings.json`: `Bash(npm test)` under Allow and `Bash(rm -rf *)` under Deny. There's no `.claude/settings.local.json`, so no personal rules override them.
