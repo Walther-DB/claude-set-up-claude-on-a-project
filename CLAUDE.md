@@ -50,7 +50,7 @@ Git
 - `db/store.js` is an in-memory stand-in for a database, seeded with two users. Data resets on every restart.
 - `tests/users.test.js` covers the HTTP endpoints through `supertest`.
 - `.github/workflows/ci.yml` runs `npm install`, `npm run lint` and `npm test` on Node 22 for every push and pull request.
-- `.claude/settings.json` holds the shared permission rules (allows `npm test`, denies `rm -rf *`).
+- `.claude/settings.json` holds the shared permission rules (allows `npm test`; asks before `git push`; denies `rm -rf *`, `git push --force` and reading `.env`).
 
 ## Maintenance & health checks
 

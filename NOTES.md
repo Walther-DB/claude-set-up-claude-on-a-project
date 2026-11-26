@@ -23,6 +23,9 @@ I started from the course's five headings: Project status, Commands, Conventions
 
 - **Allow `npm test`:** it's safe, read-only and run constantly, so asking for permission every time is just friction.
 - **Deny `rm -rf *`:** a recursive delete can wipe out work that isn't committed yet, and it can't be undone.
+- **Deny reading `.env`:** that file holds local secrets, and anything Claude reads ends up in the conversation. This rule only covers Claude's Read tool, so a shell command like `cat .env` isn't blocked by it. It's a guard against accidents, not a lock.
+- **Ask before `git push`:** a push puts work on GitHub where others can see it, so I want to approve each one. Commits stay local and easy to undo, so they don't need this.
+- **Deny `git push --force`:** a force push overwrites history on GitHub and can wipe out other people's commits. Deny beats ask, so this is blocked outright even though ordinary pushes only need my approval. The rule matches the command's start, so `git push -f` or `git push origin main --force` aren't caught by it. Those still fall under the ask rule, though, so I'd see them before they ran.
 
 **What could go wrong without the deny rule:** Claude could delete a folder recursively. The command might be well meant but aimed at the wrong place, or a cleanup step inside a longer command. This actually happened: while installing the GitHub CLI, Claude chained `rm -rf extracted` into a long install command, and the deny rule blocked the whole command before any of it ran. Claude then redid the install as small, separate steps with no delete.
 
@@ -31,4 +34,4 @@ I started from the course's five headings: Project status, Commands, Conventions
 - [x] `claude --version` runs; Claude Code is installed and signed in.
 - [x] `npm test` (4/4) and `npm run lint` pass on `main`.
 - [x] `/memory` shows `CLAUDE.md` loaded as the project memory, so its instructions reach every new session. Claude's auto-memory folder for this project is still empty, which is expected: nothing has been worth saving between sessions yet.
-- [x] `/permissions` shows the shared rules from `.claude/settings.json`: `Bash(npm test)` under Allow and `Bash(rm -rf *)` under Deny. There's no `.claude/settings.local.json`, so no personal rules override them.
+- [x] `/permissions` shows the shared rules from `.claude/settings.json`: `Bash(npm test)` under Allow, `Bash(git push:*)` under Ask, and `Bash(rm -rf *)`, `Bash(git push --force:*)` and `Read(./.env)` under Deny. There's no `.claude/settings.local.json`, so no personal rules override them.
