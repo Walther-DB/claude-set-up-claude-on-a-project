@@ -15,6 +15,7 @@ npm test                          # run all tests (Node's built-in runner, finds
 node --test tests/users.test.js   # run a single test file
 npm run lint                      # ESLint over the whole repo; no output means clean
 curl -s localhost:3000/health     # check a running server responds: {"status":"ok"}
+curl -s localhost:3000/status     # process uptime in seconds: {"uptime":12.345}
 ```
 
 Set the port with `PORT` (see `.env.example`); it defaults to 3000.
